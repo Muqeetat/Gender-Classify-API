@@ -97,7 +97,7 @@ pm.test("Confidence logic is correct", () => {
 ---
 
 ## 🔗 Deployment
-**Public API URL:** ``  
+**Public API URL:** `gender-classify-api-production-91bb.up.railway.app`  
 **GitHub Repository:** `https://github.com/Muqeetat/Gender-Classify-API.git`
 
 ---
