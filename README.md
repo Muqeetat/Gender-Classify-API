@@ -73,16 +73,50 @@ Fetches gender prediction for a given name.
 To verify the requirements, use the following test script in the **Tests** tab of Postman:
 
 ```javascript
-pm.test("Status code is 200", () => pm.response.to.have.status(200));
+// 1. Verify the HTTP Status Code (Change to 400 or 422 when testing errors)
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
 
-pm.test("CORS header is present", () => {
+// 2. Verify CORS Header (Mandatory for grading script)
+pm.test("CORS header Access-Control-Allow-Origin is *", function () {
     pm.response.to.have.header("Access-Control-Allow-Origin", "*");
 });
 
-pm.test("Confidence logic is correct", () => {
+// 3. Verify the JSON structure matches the 'Expected response format'
+pm.test("Response structure is valid", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property('status');
+    pm.expect(jsonData).to.have.property('data');
+    
+    const data = jsonData.data;
+    pm.expect(data).to.have.property('name');
+    pm.expect(data).to.have.property('gender');
+    pm.expect(data).to.have.property('probability');
+    pm.expect(data).to.have.property('sample_size'); // Renamed from count
+    pm.expect(data).to.have.property('is_confident');
+    pm.expect(data).to.have.property('processed_at');
+});
+
+// 4. Verify the Confidence Logic (Probability >= 0.7 AND Sample Size >= 100)
+pm.test("Confidence logic check", function () {
     const data = pm.response.json().data;
-    const expected = data.probability >= 0.7 && data.sample_size >= 100;
-    pm.expect(data.is_confident).to.eql(expected);
+    const manuallyCalculated = (data.probability >= 0.7 && data.sample_size >= 100);
+    pm.expect(data.is_confident).to.eql(manuallyCalculated);
+});
+
+// 5. Verify Date format (ISO 8601)
+pm.test("Processed_at is ISO 8601 / UTC format", function () {
+    const data = pm.response.json().data;
+    // Check if it ends with Z (UTC) and follows the date pattern
+    pm.expect(data.processed_at).to.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+});
+
+// 6. Performance check (Excluding external API latency)
+// Since we can't easily isolate latency in Postman without custom headers, 
+// we check if the overall response is reasonable.
+pm.test("Total response time is healthy", function () {
+    pm.expect(pm.response.responseTime).to.be.below(2000); 
 });
 ```
 
