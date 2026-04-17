@@ -2,7 +2,7 @@
 
 A high-performance .NET Minimal API that integrates with the Genderize.io service to predict the gender of a name with custom confidence logic and data processing.
 
-## 🚀 Features
+## Features
 - **Data Transformation**: Renames external API fields (e.g., `count` to `sample_size`).
 - **Confidence Logic**: Custom boolean `is_confident` based on probability ($\ge 0.7$) and sample size ($\ge 100$).
 - **Input Validation**: Handles missing names (400) and non-string inputs (422).
@@ -11,7 +11,7 @@ A high-performance .NET Minimal API that integrates with the Genderize.io servic
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 * **.NET 9** (Minimal APIs)
 * **C# 13**
 * **System.Text.Json** (Snake_case serialization)
@@ -19,16 +19,16 @@ A high-performance .NET Minimal API that integrates with the Genderize.io servic
 
 ---
 
-## 🏃 Getting Started
+## Getting Started
 
 ### Prerequisites
-* [.NET SDK](https://dotnet.microsoft.com/download) (Version 8.0 or 9.0)
+* [.NET SDK](https://dotnet.microsoft.com/download) (Version 9.0 or 10.0)
 
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
-   cd GenderClassifyApi
+   git clone https://github.com/Muqeetat/Gender-Classify-API.git
+   cd GenderClassifyAPI
    ```
 2. Restore dependencies:
    ```bash
@@ -42,7 +42,7 @@ A high-performance .NET Minimal API that integrates with the Genderize.io servic
 
 ---
 
-## 📖 API Documentation
+## API Documentation
 
 ### GET `/api/classify`
 Fetches gender prediction for a given name.
@@ -67,7 +67,7 @@ Fetches gender prediction for a given name.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Postman Testing
 To verify the requirements, use the following test script in the **Tests** tab of Postman:
@@ -96,13 +96,13 @@ pm.test("Confidence logic is correct", () => {
 
 ---
 
-## 🔗 Deployment
+## Deployment
 **Public API URL:** `gender-classify-api-production-91bb.up.railway.app`  
 **GitHub Repository:** `https://github.com/Muqeetat/Gender-Classify-API.git`
 
 ---
 
-### Implementation Details: The Middleware Pipeline
+### The Middleware Pipeline
 
 
 The application follows a strict middleware order to ensure CORS headers are attached to every response, including validation errors. The logic is decoupled into a Service layer to maintain clean code standards.
