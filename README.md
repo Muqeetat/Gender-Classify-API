@@ -73,12 +73,12 @@ Fetches gender prediction for a given name.
 To verify the requirements, use the following test script in the **Tests** tab of Postman:
 
 ```javascript
-// 1. Verify the HTTP Status Code (Change to 400 or 422 when testing errors)
+// 1. Verify the HTTP Status Code
 pm.test("Status code is 200", function () {
     pm.response.to.have.status(200);
 });
 
-// 2. Verify CORS Header (Mandatory for grading script)
+// 2. Verify CORS Header
 pm.test("CORS header Access-Control-Allow-Origin is *", function () {
     pm.response.to.have.header("Access-Control-Allow-Origin", "*");
 });
@@ -93,12 +93,12 @@ pm.test("Response structure is valid", function () {
     pm.expect(data).to.have.property('name');
     pm.expect(data).to.have.property('gender');
     pm.expect(data).to.have.property('probability');
-    pm.expect(data).to.have.property('sample_size'); // Renamed from count
+    pm.expect(data).to.have.property('sample_size');
     pm.expect(data).to.have.property('is_confident');
     pm.expect(data).to.have.property('processed_at');
 });
 
-// 4. Verify the Confidence Logic (Probability >= 0.7 AND Sample Size >= 100)
+// 4. Verify the Confidence Logic
 pm.test("Confidence logic check", function () {
     const data = pm.response.json().data;
     const manuallyCalculated = (data.probability >= 0.7 && data.sample_size >= 100);
